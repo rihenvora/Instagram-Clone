@@ -1,0 +1,88 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="static/all.css" />
+<link rel="stylesheet" type="text/css" href="static/home.css" />
+</head>
+<body translate="no">
+    {% if user %}
+    {% for usr in list: %}
+<header>
+<div class="container">
+<div class="profile">
+<div class="profile-image">
+  {% if thumbnail: %}
+    <img src="{{thumbnail}}" alt="" style="width:200px; height:200px;">
+  {% else %}
+    <img src="static/user.png" alt="" style="width:200px; height:200px;">
+  {% endif %}
+</div>
+<div class="profile-user-settings">
+<h1 class="profile-user-name">{{usr.name}}</h1>
+<!-- <a href="/createPost" class="btn profile-edit-btn" style="text-decoration: none;">Create Post</a>
+<a href="/search"class="btn profile-edit-btn" style="text-decoration: none;">Search User</a> -->
+<a href='/' title="home"><button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-home" aria-hidden="true"></i></button></a>
+<a href='/createPost' title="create post"><button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-plus-square" aria-hidden="true"></i></button></a>
+<a href='/search' title="search user"><button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-search" aria-hidden="true"></i></button></a>
+<a href='{{ url }}'><button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-power-off" aria-hidden="true"></i></button></a>
+
+</div>
+<div class="profile-stats">
+<ul>
+<li><span class="profile-stat-count">{{post}}</span> posts</li>
+<li><span class="profile-stat-count">{{followers}}</span> <a href="/friends?key={{usr.key.id()}}&key1=followers" style="text-decoration:none;">followers</a></li>
+<li><span class="profile-stat-count">{{folows}}</span> <a href="/friends?key={{usr.key.id()}}&key1=follows" style="text-decoration:none;">following</a></li>
+</ul>
+</div>
+<div class="profile-bio">
+<p><span class="profile-real-name">{{usr.name}}</span> {{usr.bio}}</p>
+<p style="color:red;font-variant: all-petite-caps;"><span class="profile-real-name">Note</span> Please Refresh Page After Performing Adding Post, Follow or Unfollowing Actions</p>
+{% if not thumbnail: %}
+<p style="color:red;font-variant: all-petite-caps;"><span class="profile-real-name">Note</span> Please Refresh Page To View Your Display Picture(DP)</p>
+{% endif %}
+</div>
+</div>
+
+</div>
+
+</header>
+<main>
+<div class="container">
+<div class="gallery">
+  {% if posting|length > 0 %}
+  {% for img in range(posting|length) %}
+  <div class="gallery-item" tabindex="0">
+    <!--image size 285* 285 -->
+  <img src="{{posting[img]}}" class="gallery-image" alt="" >
+  <div class="gallery-item-info">
+  <ul>
+  <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fa fa-heart" aria-hidden="true"></i> {{poctcmntcnt[img]}}</li>
+  <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fa fa-comment" aria-hidden="true"></i> {{poctcmntcnt[img]}}</li>
+  <li class="gallery-item-addcoment"><span class="visually-hidden">Add Comments:</span><i class="fa fa-plus" aria-hidden="true"></i> <a href="/addComment?key={{postids[img]}}" style="color:white;text-decoration:none;"> Add Comment</a></li>
+  </ul>
+  </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div tabindex="0" style="text-align:center; font-size:25px;">
+    <p style="color:red;font-variant: all-petite-caps;"><span class="profile-real-name">Ooops !!!</span> No post yet</p>
+  </div>
+  {% endif %}
+</div>
+
+<!--<div class="loader"></div>-->
+</div>
+
+</main>
+{% endfor %}
+{% else %}
+<header style="text-align:center;">
+  <div class="container">
+    <div style="font-size: 25px !important;">
+        <center><img src="static/instagram.jpg"></center>
+        <p><span class="profile-real-name">Hello guest welcome to the application</span><br /> you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+    </div>
+  </div>
+</header>
+{% endif %}
+</body></html>

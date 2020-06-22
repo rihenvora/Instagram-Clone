@@ -1,0 +1,48 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="static/googlefonts.css" />
+	<link rel="stylesheet" type="text/css" href="static/userbasicinfo.css" />
+	<link rel="stylesheet" type="text/css" href="static/all.css" />
+
+</head>
+<body>
+	{% if user: %}
+	<div style="align:top-left; float:right; color:white;margin:10px;">
+		<p><a href='{{ url }}' class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-power-off" aria-hidden="true"></i></a></p>
+	</div>
+	<div style="align:top-right; float:right; color:white;padding: 10px !important;">
+		<p><a class="btn profile-edit-btn" style="text-decoration: none;" href='/'>Home</a></p>
+	</div>
+<div id="wrapper">
+  <div class="main-content">
+    <div class="header">
+      <!--<img src="https://i.imgur.com/zqpwkLQ.png" />-->
+	  <h1 style="font-variant: all-petite-caps;">{{key1}}</h1>
+    </div>
+    <div class="l-part">
+		<table border = "1" style="text-align: center; color: white;width:100%;"><thead><tr><th>ID</th><th>Email ID</th><th>Name</th></tr></thead><tbody>
+		{% if showList:  %}
+			{% for ev in showList %}
+			<tr><td>{{loop.index}}</td><td>{{ev.email_address}}</td><td><a href='/details?key={{ev.key.id()}}' style="color:yellow;">{{ev.name}}</a></td></tr>
+			{% endfor %}
+		 {% else %}
+				 <tr><td colspan="3" style="text-align: center; color: white;">No Data Available</td></tr>
+		 {% endif %}
+	</tbody></table>
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="wrapper">
+  <div class="main-content">
+    <div class="header">
+      <!--<img src="https://i.imgur.com/zqpwkLQ.png" />-->
+	  <h1>Please LogIn</h1>
+		<p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+		{% endif %}
+    </div>
+	</div>
+	</div>
+</body>
+</html>

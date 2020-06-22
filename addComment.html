@@ -1,0 +1,88 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="static/all.css" />
+<link rel="stylesheet" type="text/css" href="static/home.css" />
+	<link rel="stylesheet" type="text/css" href="static/googlefonts.css" />
+	<link rel="stylesheet" type="text/css" href="static/userbasicinfo.css" />
+</head>
+<body translate="no">
+    {% if user %}
+    <div style="align:top-left; float:right; color:white;margin:10px;">
+  		<p><a href='{{ url }}' class="btn profile-settings-btn" style="width:fit-content!important;" aria-label="profile settings"><i class="fas fa-power-off" aria-hidden="true"></i></a></p>
+  	</div>
+  	<div style="align:top-right; float:right; color:white;padding: 10px !important;">
+  		<p><a class="btn profile-edit-btn" style="text-decoration: none;width:fit-content!important;" href='/'>Home</a></p>
+  	</div>
+<main>
+<div class="container" style="margin: 50px auto !important;">
+<div class="gallery">
+  <div class="gallery-item" tabindex="0">
+    <img src="{{img}}" class="gallery-image" alt="" >
+  </div>
+  <div class="gallery-item" tabindex="0">
+  <p style="color:white;font-variant: all-petite-caps;font-size: 25px !important;"><span class="profile-real-name">Created By :</span> {{post.created_by}}</p>
+  <p style="color:white;font-variant: all-petite-caps;font-size: 25px !important;"><span class="profile-real-name">Caption : </span> {{post.caption}}</p>
+</div>
+  <div class="gallery-item" tabindex="0">
+  <form method="post" action="/addComment">
+    <input type="text" placeholder="Comment" name="comment" id="comment" class="input-1" maxlength="200" required/>
+    <input type="hidden" name="postid" id="postid" value="{{post_id}}" class="input-1" />
+    <input type="submit" value="ADD" class="btn"  name="button"/>
+  </form>
+</div>
+</div>
+<br />
+<fieldset style="border:transparent;">
+  <legend style="font-size:15px; color:white;">Previous Posts</legend>
+  {% if comments|length > 0 : %}
+	{% if comments|length >= 5: %}
+	<button id="cmntshow" class="btn profile-edit-btn" style="width: fit-content !important;padding:2px !important;float:right;">Show All</button>
+	{% endif %}
+  {% for cmnt in range(comments|length): %}
+  <p id="p{{cmnt}}"style="color:white;font-size:20px;margin-left:10px;" {% if cmnt>=5: %} hidden {% endif %}><span class="profile-real-name">{{comments_by[cmnt]}}</span> : {{comments[cmnt]}}</p><hr style="border:transparent;" />
+  {% endfor %}
+  {% else %}
+  <p style="color:white; text-align:center; font-size:25px;"><span class="profile-real-name">No comments</span>Be the first to comment</p>
+  {% endif %}
+</fieldset>
+</div>
+
+</main>
+{% else %}
+<header style="text-align:center;">
+  <div class="container">
+    <div style="font-size: 25px !important;">
+        <img src="static/instagram.jpg">
+        <p><span class="profile-real-name">Hello guest welcome to the application</span><br /> you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+    </div>
+  </div>
+</header>
+{% endif %}
+</body>
+<script src="static/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#cmntshow").click(function(){
+		var i = 5;
+		for(i=5; i< {{comments|length}}; i++){
+			if($("#cmntshow").html() == "Show All"){
+				console.log(i)
+				$("#p"+i).show();
+				//$("#cmntshow").html("Hide All");
+			}
+			else{
+					//$("#cmntshow").html("Show All");
+					$("#p"+i).hide();
+			}
+		}
+		if($("#cmntshow").html() == "Show All"){
+			$("#cmntshow").html("Hide All");
+		}
+		else{
+				$("#cmntshow").html("Show All");
+		}
+  });
+});
+</script>
+</html>
